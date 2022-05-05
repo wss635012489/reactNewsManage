@@ -6,6 +6,7 @@ import {IStore} from '@t/store'
 import notFindPage from '@v/404/notFindPage'
 import Home from '@v/home/Index'
 import AuthList from '@v/auth/List'
+import RoleList from '@v/role/List'
 
 
 interface IProps {
@@ -30,6 +31,8 @@ export default class Content extends Component<IProps,{}> {
         <Switch>
           <Route path='/home' component={Home}></Route>
           <Route path='/right-manage/right/list' component={AuthList}></Route>
+          <Route path='/right-manage/role/list' component={RoleList}></Route>
+          
           <Redirect from='/' to='/home' exact></Redirect>
           <Route path="*" component={notFindPage}></Route>
         </Switch>

@@ -1,12 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table,Tag,Button,Popover,Switch   } from 'antd';
 import {EditOutlined,DeleteOutlined} from '@ant-design/icons'
 import {INavBarItem} from '@t/navBar'
-import {getNavBarData} from '@h/api'
-import {editGradOneAuth,editGradTwoAuth} from '@h/api'
+import {getNavBarData,editGradOneAuth,editGradTwoAuth} from '@h/api'
 
 export default function List() {
   const [dataSource,setDataSource] = useState<INavBarItem[]>([])
+  const [loading,setLoading] = useState<boolean>(false)
   const columns = [
     {
       title: 'ID',
@@ -47,14 +47,16 @@ export default function List() {
   ];
 
   useEffect(() => {
+    setLoading(true)
     getNavBarData<{},INavBarItem[]>().then((arr:INavBarItem[]) => {
-      console.log(arr)
+     // console.log(arr)
       for(var i in arr){
         if(!arr[i].children.length){
           delete arr[i].children
         }
       }
       setDataSource(arr)
+      setLoading(false)
     })
   },[])
 
@@ -71,6 +73,6 @@ export default function List() {
     }
   }
   return (
-    <Table dataSource={dataSource} columns={columns} />
+    <Table dataSource={dataSource} columns={columns} pagination={false} loading={loading}/>
   )
 }

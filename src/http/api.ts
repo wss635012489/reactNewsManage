@@ -21,3 +21,17 @@ export function editGradTwoAuth<Request,Response>(id:string,data?:Request){
     data
   })
 }
+export function getRoles<Request,Response>(data?:Request){
+  return $http.request<Request,Response>({
+    url:'/roles',
+    method:'get',
+    data
+  })
+}
+export function editRoleItem<Request,Response>(id:number,data?:Request){
+  return $http.request<Request,Response>({
+    url:`/roles/${id}`,
+    method:'patch',
+    data
+  })
+}
