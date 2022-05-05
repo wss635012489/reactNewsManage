@@ -1,0 +1,21 @@
+.box {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  height: 100%;
+  >div {
+    width: 100%;
+  }
+  :global {
+    .logo {
+      color: #fff;
+      padding: 15px 15px 5px 24px;
+      font-size: 16px;
+    }
+    .menu-List {
+      flex: 1;
+      overflow-y: auto;
+    }
+    
+  }
+}

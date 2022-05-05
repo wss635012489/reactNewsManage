@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Layout,Dropdown,Menu,Avatar } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined,UserOutlined } from '@ant-design/icons';
-const { Header } = Layout;
+import {IProps} from '@t/topHeader'
 
+
+const { Header } = Layout;
 const menu = (
   <Menu items={[
       {
@@ -19,18 +21,14 @@ const menu = (
   />
 );
 
-export default function TopHeader() {
-  const [collapsed,setCollapsed] = useState<boolean>(false)
+export default function TopHeader({setCollapsedFun,collapsed}:IProps) {
 
-  const changeCollapsed = () =>{
-    setCollapsed(!collapsed)
-  }
   return (
     <Header className="site-layout-background" style={{ padding: '0 15px' }} >
       <div className='between'>
        <div>
         {
-            collapsed?<MenuFoldOutlined className='font-20' onClick={changeCollapsed}/>:  <MenuUnfoldOutlined className='font-20' onClick={changeCollapsed}/>
+            collapsed?<MenuFoldOutlined className='font-20' onClick={setCollapsedFun}/>:  <MenuUnfoldOutlined className='font-20' onClick={setCollapsedFun}/>
           }
         </div>
         <div className='y-center'>
