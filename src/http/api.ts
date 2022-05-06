@@ -56,3 +56,9 @@ export function addUser<Request,Response>(data?:Request){
     data
   })
 }
+export function deteleUser<Request,Response>(id:string){
+  return $http.request<Request,Response>({
+    url:`/users/${id}`,
+    method:'delete',
+  })
+}

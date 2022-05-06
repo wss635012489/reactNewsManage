@@ -6,7 +6,7 @@ import styled from  './scss/list.module.scss'
 import {IUserItem} from '@t/user'
 import {IRoleListItem} from '@t/role'
 import {IRegionItem} from '@t/user'
-import {getUsers,getRoles,getRegions,addUser} from '@h/api'
+import {getUsers,getRoles,getRegions,addUser,deteleUser} from '@h/api'
 import { FormInstance } from 'antd/es/form';
 
 export default function List() {
@@ -54,7 +54,7 @@ export default function List() {
       title: '操作',
       render:(item) => {
         return (<div>
-          <Button type="primary" danger icon={<DeleteOutlined />} disabled={item.default}>
+          <Button type="primary" danger icon={<DeleteOutlined />} disabled={item.default} onClick={deteleTableItem(item)}>
             删除
           </Button>
           
@@ -88,7 +88,7 @@ export default function List() {
 
   const handleOk = () => {
     fromRef.current.validateFields().then(values => {
-      console.log(values)
+      //console.log(values)
       var postData = {
         ...values,
         "roleState": true,
@@ -100,12 +100,33 @@ export default function List() {
         init_user()
       })
     })
-    setIsModalVisible(false)
+    handleCancel()
   }
 
   const handleCancel = () => {
     setIsModalVisible(false)
     fromRef.current.resetFields()
+  }
+
+  const deteleTableItem = (item) => {
+    return () => {
+      Modal.confirm({
+        title: '提示',
+        content: '确定要删除吗',
+        okText: '确认',
+        cancelText: '取消',
+        onOk() {
+          deteleUser(item.id).then(res => {
+            //console.log(res)
+            message.success('删除成功');
+            init_user()
+          })
+        },
+        onCancel(){
+
+        }
+      })
+    }
   }
 
   return (

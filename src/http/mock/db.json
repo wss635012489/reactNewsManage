@@ -116,24 +116,6 @@
       "roleState": true,
       "default": false,
       "id": 13
-    },
-    {
-      "username": "测试6",
-      "password": "23535",
-      "roleId": 3,
-      "region": "南极洲",
-      "roleState": true,
-      "default": false,
-      "id": 14
-    },
-    {
-      "username": "ces7",
-      "password": "1e425",
-      "roleId": 3,
-      "region": "大洋洲",
-      "roleState": true,
-      "default": false,
-      "id": 15
     }
   ],
   "roles": [
