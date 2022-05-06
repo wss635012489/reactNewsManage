@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Table,Tag,Button,Popover,Switch   } from 'antd';
+import { Table,Tag,Button,Popover,Switch,message   } from 'antd';
 import {EditOutlined,DeleteOutlined} from '@ant-design/icons'
 import {INavBarItem} from '@t/navBar'
 import {getNavBarData,editGradOneAuth,editGradTwoAuth} from '@h/api'
@@ -70,6 +70,7 @@ export default function List() {
       }
       item.pagepermisson = item.pagepermisson == 1?0:1
       setDataSource([...dataSource])
+      message.success('修改成功');
     }
   }
   return (

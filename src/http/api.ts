@@ -35,3 +35,24 @@ export function editRoleItem<Request,Response>(id:number,data?:Request){
     data
   })
 }
+export function getUsers<Request,Response>(data?:Request){
+  return $http.request<Request,Response>({
+    url:`/users?_expand=role`,
+    method:'get',
+    data
+  })
+}
+export function getRegions<Request,Response>(data?:Request){
+  return $http.request<Request,Response>({
+    url:`/regions`,
+    method:'get',
+    data
+  })
+}
+export function addUser<Request,Response>(data?:Request){
+  return $http.request<Request,Response>({
+    url:`/users`,
+    method:'post',
+    data
+  })
+}

@@ -17,7 +17,7 @@ const $http = axios.create({
 
 $http.interceptors.response.use((response:AxiosResponse<ResponseData>) => {
   //console.log(response)
-    if(response.status != 200){
+    if(response.status < 200 && response.status > 299){
      message.error('服务器错误')
     }else {
       return response.data

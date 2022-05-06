@@ -84,6 +84,7 @@ export default function List() {
             onCheck={onCheck}
             checkedKeys={curentRights}
             treeData={treeData}
+            height={400}
           />
       </Modal>
     </>
