@@ -62,3 +62,17 @@ export function deteleUser<Request,Response>(id:string){
     method:'delete',
   })
 }
+export function setUserRoleState<Request,Response>(id:number,data?:Request){
+  return $http.request<Request,Response>({
+    url:`/users/${id}`,
+    method:'patch',
+    data
+  })
+}
+export function editUser<Request,Response>(id:number,data?:Request){
+  return $http.request<Request,Response>({
+    url:`/users/${id}`,
+    method:'patch',
+    data
+  })
+}

@@ -6,7 +6,7 @@ import styled from  './scss/list.module.scss'
 import {IUserItem} from '@t/user'
 import {IRoleListItem} from '@t/role'
 import {IRegionItem} from '@t/user'
-import {getUsers,getRoles,getRegions,addUser,deteleUser} from '@h/api'
+import {getUsers,getRoles,getRegions,addUser,deteleUser,setUserRoleState,editUser} from '@h/api'
 import { FormInstance } from 'antd/es/form';
 
 export default function List() {
@@ -16,6 +16,7 @@ export default function List() {
   const [isModalVisible,setIsModalVisible] = useState<boolean>(false)
   const [regionList,setRegionList] = useState<IRegionItem[]>([])
   const [roleList,setRoleList] = useState<IRoleListItem[]>([])
+  const [current,setCurrent] = useState<IUserItem | null>(null)
    
   const columns = [
     {
@@ -34,6 +35,15 @@ export default function List() {
       dataIndex: 'role',
       render:role => {
         return <b>{role.roleName}</b>
+      },
+      filters: roleList.map(item => {
+          return {
+            text:item.roleName,
+            value:item.roleType
+          }
+      }),
+      onFilter: (value, record) => {
+        return record.roleId == value
       }
     },
     {
@@ -47,7 +57,7 @@ export default function List() {
       title: '用户状态',
       dataIndex: 'roleState',
       render:(region,item) => {
-        return <Switch checked={region} disabled={item.default}></Switch>
+        return <Switch checked={region} disabled={item.default} onChange={onSwitchChange(item)}></Switch>
       }
     },
     {
@@ -58,7 +68,7 @@ export default function List() {
             删除
           </Button>
           
-          <Button type="primary" icon={<EditOutlined />} style={{marginLeft:'10px'}} disabled={item.default}>
+          <Button type="primary" icon={<EditOutlined />} style={{marginLeft:'10px'}} disabled={item.default} onClick={onEditUser(item)}>
               修改
             </Button>
         </div>)
@@ -89,22 +99,32 @@ export default function List() {
   const handleOk = () => {
     fromRef.current.validateFields().then(values => {
       //console.log(values)
-      var postData = {
-        ...values,
-        "roleState": true,
-        "default": false,
-      }
-      addUser(postData).then(res => {
-        //console.log(res)
-        message.success('新增成功');
-        init_user()
-      })
+      if(!current){
+        var postData = {
+          ...values,
+          "roleState": true,
+          "default": false,
+        }
+        addUser(postData).then(res => {
+          //console.log(res)
+          message.success('新增成功');
+          init_user()
+        })
+      }else {
+        editUser(current.id,{...values}).then(res => {
+         // console.log(res)
+          message.success('修改成功');
+          init_user()
+        })
+      } 
+      handleCancel()
     })
-    handleCancel()
+   
   }
 
   const handleCancel = () => {
     setIsModalVisible(false)
+    setCurrent(null)
     fromRef.current.resetFields()
   }
 
@@ -128,11 +148,39 @@ export default function List() {
       })
     }
   }
+  
+  const onSwitchChange = (item:IUserItem) => {
+    return () => {
+      item.roleState = !item.roleState
+      setUserRoleState(item.id,{roleState:item.roleState}).then(res => {
+        //console.log(res)
+        message.success('修改成功');
+      })
+      setDataSource([...dataSource])
+    }
+  }
+
+  const onAddUser = () => {
+    setCurrent(null)
+    setIsModalVisible(true)
+  }
+
+  const onEditUser = (item:IUserItem) => {
+    return () => {
+      console.log(item)
+      setIsModalVisible(true)
+        setCurrent(item)
+      
+      setTimeout(() => {
+        fromRef.current.setFieldsValue(item)
+      }, 100);
+    }
+  }
 
   return (
     <div className={styled.box}>
       <div className='btn'>
-        <Button type='primary' onClick={() => {setIsModalVisible(true)}}>新增用户</Button>
+        <Button type='primary' onClick={onAddUser}>新增用户</Button>
       </div>
       <div className='table'>
         <div>
@@ -140,7 +188,7 @@ export default function List() {
         </div>
       </div>
       <Modal title="权限分配" visible={isModalVisible} okText="确定" cancelText="取消" onOk={handleOk} onCancel={handleCancel}>
-        <BaseFrom ref={fromRef} regionList={regionList} roleList={roleList}></BaseFrom>
+        <BaseFrom ref={fromRef} regionList={regionList} roleList={roleList} editData={current}></BaseFrom>
       </Modal> 
     </div>
   )

@@ -1,7 +1,7 @@
-import React, { forwardRef ,useState} from 'react'
+import React, { forwardRef ,useEffect,useState} from 'react'
 import {Form,Input,Select} from 'antd'
 import { FormInstance } from 'antd/es/form';
-import {IRegionItem} from '@t/user'
+import {IRegionItem,IUserItem} from '@t/user'
 import {IRoleListItem} from '@t/role'
 
 const {Option} = Select
@@ -9,10 +9,18 @@ const {Option} = Select
 interface IProps {
   regionList:IRegionItem[]
   roleList:IRoleListItem[]
+  editData:IUserItem | null
 }
 
 const baseFrom = forwardRef((props:IProps,ref:React.RefObject<FormInstance>) => {
   const [isDisabled, setisDisabled] = useState<boolean>(false)
+  useEffect(() => {
+    if(!props.editData.region){
+      setisDisabled(true)
+    }else {
+      setisDisabled(false)
+    }
+  },[props.editData])
   return (
     <Form
       ref={ref}
