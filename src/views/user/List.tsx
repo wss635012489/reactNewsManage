@@ -161,8 +161,8 @@ export default function List() {
   }
 
   const onAddUser = () => {
-    setCurrent(null)
-    setIsModalVisible(true)
+     setCurrent(null)
+     setIsModalVisible(true)
   }
 
   const onEditUser = (item:IUserItem) => {

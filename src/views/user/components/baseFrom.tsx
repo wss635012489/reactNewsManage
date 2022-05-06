@@ -15,7 +15,7 @@ interface IProps {
 const baseFrom = forwardRef((props:IProps,ref:React.RefObject<FormInstance>) => {
   const [isDisabled, setisDisabled] = useState<boolean>(false)
   useEffect(() => {
-    if(!props.editData.region){
+    if(props.editData && !props.editData.region){
       setisDisabled(true)
     }else {
       setisDisabled(false)
