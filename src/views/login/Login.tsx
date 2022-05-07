@@ -7,14 +7,14 @@ import './login.scss'
 import particlesOptions from "./particles.json";
 import { ISourceOptions } from "tsparticles-engine";
 import {login} from '@h/api'
-import {ILoginRes} from '@t/login'
+import {ILocaUser} from '@t/login'
 import { useHistory } from 'react-router-dom';
 
 export default function Login() {
   const history = useHistory()
     const onFinish = (values: any) => {
       console.log('Success:', values);
-      login({...values,roleState:true,'_expand':'role'}).then((res:ILoginRes[]) => {
+      login({...values,roleState:true,'_expand':'role'}).then((res:ILocaUser[]) => {
         if(res && res.length){
           localStorage.setItem('token',JSON.stringify(res[0]))
           history.replace('/')

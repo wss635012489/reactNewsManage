@@ -3,7 +3,7 @@ import { Layout,Dropdown,Menu,Avatar } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined,UserOutlined } from '@ant-design/icons';
 import {IProps} from '@t/topHeader'
 import { useHistory } from 'react-router-dom';
-
+import {ILocaUser} from '@t/login'
 
 const { Header } = Layout;
 
@@ -15,11 +15,12 @@ export default function TopHeader({setCollapsedFun,collapsed}:IProps) {
       history.replace('/login')
     }
   }
-
+  const user:ILocaUser  = JSON.parse(localStorage.getItem('token'))
+  console.log(user)
   const menu = (
     <Menu onClick={onMenuClick} items={[
         {
-         label: 'admin管理员',
+         label: user.role.roleName,
           key:'1',
           disabled: true,
         },
@@ -42,7 +43,7 @@ export default function TopHeader({setCollapsedFun,collapsed}:IProps) {
         </div>
         <div className='y-center'>
           <div className='mr-10'>
-            欢迎amin回来
+            欢迎{user.username}回来
           </div>
           <Dropdown overlay={menu}>
             <Avatar size={40} icon={<UserOutlined />} />

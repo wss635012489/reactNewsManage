@@ -7,6 +7,7 @@ import {INavBarItem} from '@t/navBar'
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from '../scss/navBar.module.scss'
 import {IProps} from '@t/navBar'
+import {ILocaUser} from '@t/login'
 
 const { Sider } = Layout;
 
@@ -36,6 +37,10 @@ export default function NavBar({collapsed,navBar}:IProps) {
       renderMenu(navBar)
     },[navBar])
 
+    const user:ILocaUser = JSON.parse(localStorage.getItem('token'))
+    const checkUsrRoute = (item:INavBarItem) => {
+      return item.pagepermisson && user.role.rights.includes(item.key)
+    }
     const renderMenu = (arr:INavBarItem[]) => {
       const items: MenuItem[] = []
       for(var i in arr){
@@ -45,7 +50,7 @@ export default function NavBar({collapsed,navBar}:IProps) {
             arr[i].children[j].pagepermisson && children.push(getItem(arr[i].children[j].title,arr[i].children[j].key,<PieChartOutlined />))
           }
         }
-        arr[i].pagepermisson && items.push(getItem(arr[i].title,arr[i].key,<PieChartOutlined />,children.length?children:''))
+        checkUsrRoute(arr[i]) && items.push(getItem(arr[i].title,arr[i].key,<PieChartOutlined />,children.length?children:''))
       }
      // console.log(items)
       setList(items)
