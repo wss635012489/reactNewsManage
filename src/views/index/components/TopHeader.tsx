@@ -16,7 +16,7 @@ export default function TopHeader({setCollapsedFun,collapsed}:IProps) {
     }
   }
   const user:ILocaUser  = JSON.parse(localStorage.getItem('token'))
-  console.log(user)
+  //console.log(user)
   const menu = (
     <Menu onClick={onMenuClick} items={[
         {
@@ -43,7 +43,7 @@ export default function TopHeader({setCollapsedFun,collapsed}:IProps) {
         </div>
         <div className='y-center'>
           <div className='mr-10'>
-            欢迎{user.username}回来
+            欢迎<span style={{color:'#008dff' }}>{user.username}</span>回来
           </div>
           <Dropdown overlay={menu}>
             <Avatar size={40} icon={<UserOutlined />} />

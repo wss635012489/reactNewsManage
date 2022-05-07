@@ -8,6 +8,7 @@ import {IRoleListItem} from '@t/role'
 import {IRegionItem} from '@t/user'
 import {getUsers,getRoles,getRegions,addUser,deteleUser,setUserRoleState,editUser} from '@h/api'
 import { FormInstance } from 'antd/es/form';
+import {ILocaUser} from '@t/login'
 
 export default function List() {
   const fromRef = useRef<FormInstance>()
@@ -76,11 +77,14 @@ export default function List() {
     },
   ];
 
+  const user:ILocaUser  = JSON.parse(localStorage.getItem('token'))
+  console.log(user)
   const init_user = () => {
     setLoading(true)
     getUsers<{},IUserItem[]>().then((arr:IUserItem[]) => {
-    // console.log(arr)
-      setDataSource(arr)
+     console.log(arr)
+     var list= user.roleId == 1?arr:arr.filter(item => item.region == user.region && item.roleId > user.roleId)
+      setDataSource(list)
       setLoading(false)
     })
   }
