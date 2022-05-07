@@ -1,0 +1,25 @@
+.loginWarp {
+  width: 100%;
+  height: 100%;
+  background-color: #5468ff;
+  color: #fff;
+  z-index: 100;
+  .fromWarp {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 500px;
+    height: 250px;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 20px;
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #000;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  }
+}

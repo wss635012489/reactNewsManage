@@ -76,3 +76,10 @@ export function editUser<Request,Response>(id:number,data?:Request){
     data
   })
 }
+export function login<Request,Response>(data?:Request){
+  return $http.request<Request,Response>({
+    url:`/users`,
+    method:'get',
+    params:data
+  })
+}

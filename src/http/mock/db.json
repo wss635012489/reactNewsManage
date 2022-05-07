@@ -89,6 +89,15 @@
       "roleState": true,
       "default": false,
       "id": 10
+    },
+    {
+      "username": "ceshi",
+      "password": "123456",
+      "roleId": 3,
+      "region": "亚洲",
+      "roleState": true,
+      "default": false,
+      "id": 11
     }
   ],
   "roles": [

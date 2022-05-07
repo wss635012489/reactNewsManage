@@ -2,26 +2,35 @@ import React, { useState } from 'react'
 import { Layout,Dropdown,Menu,Avatar } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined,UserOutlined } from '@ant-design/icons';
 import {IProps} from '@t/topHeader'
+import { useHistory } from 'react-router-dom';
 
 
 const { Header } = Layout;
-const menu = (
-  <Menu items={[
-      {
-       label: 'admin管理员',
-        key:'1',
-        disabled: true,
-      },
-      {
-        label: '退出登录',
-         danger:true,
-         key:'2'
-       },
-    ]}
-  />
-);
 
 export default function TopHeader({setCollapsedFun,collapsed}:IProps) {
+  const history = useHistory()
+  const onMenuClick = (data) => {
+    if(data.key == 2){
+      localStorage.removeItem('token')
+      history.replace('/login')
+    }
+  }
+
+  const menu = (
+    <Menu onClick={onMenuClick} items={[
+        {
+         label: 'admin管理员',
+          key:'1',
+          disabled: true,
+        },
+        {
+          label: '退出登录',
+           danger:true,
+           key:'2'
+         },
+      ]}
+    />
+  );
 
   return (
     <Header className="site-layout-background" style={{ padding: '0 15px' }} >
