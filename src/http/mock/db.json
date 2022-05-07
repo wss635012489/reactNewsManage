@@ -187,8 +187,7 @@
         "/publish-manage",
         "/publish-manage/unpublished",
         "/publish-manage/published",
-        "/publish-manage/sunset",
-        "/home"
+        "/publish-manage/sunset"
       ]
     }
   ],

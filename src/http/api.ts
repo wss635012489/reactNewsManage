@@ -83,3 +83,14 @@ export function login<Request,Response>(data?:Request){
     params:data
   })
 }
+export function getAllNavBar(){
+  const p1 = $http.request({
+    url:`/rights`,
+    method:'get',
+  })
+  const p2 = $http.request({
+    url:`/children`,
+    method:'get',
+  })
+  return Promise.all([p1,p2])
+}

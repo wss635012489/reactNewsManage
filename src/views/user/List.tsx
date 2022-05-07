@@ -78,11 +78,11 @@ export default function List() {
   ];
 
   const user:ILocaUser  = JSON.parse(localStorage.getItem('token'))
-  console.log(user)
+ // console.log(user)
   const init_user = () => {
     setLoading(true)
     getUsers<{},IUserItem[]>().then((arr:IUserItem[]) => {
-     console.log(arr)
+    // console.log(arr)
      var list= user.roleId == 1?arr:arr.filter(item => item.region == user.region && item.roleId > user.roleId)
       setDataSource(list)
       setLoading(false)
