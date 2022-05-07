@@ -10,8 +10,8 @@ export default function index() {
         <Route path="/login" render={() => {
           return localStorage.getItem('token')?<Redirect to="/"></Redirect>: <Login></Login>
         }}></Route>
-        <Route path="/" render={() => {
-          return localStorage.getItem('token')? <Index></Index>:<Redirect to="/login"></Redirect>
+        <Route path="/" render={(props) => {
+          return localStorage.getItem('token')? <Index {...props}></Index>:<Redirect to="/login"></Redirect>
         }}></Route>
       </Switch>
     </HashRouter>

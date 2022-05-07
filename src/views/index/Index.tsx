@@ -8,13 +8,16 @@ import {observer,inject} from 'mobx-react'
 import {toJS} from 'mobx'
 import {ICollapsed} from '@t/public'
 import {IStore} from '@t/store'
+import {RouteComponentProps} from 'react-router-dom'
+import Nprogress  from 'nprogress'
+import 'nprogress/nprogress.css';
 
 
 const { Content } = Layout;
 interface IState extends ICollapsed {
   
 }
-interface IProps {
+interface IProps extends RouteComponentProps {
   store?:IStore
 }
 @inject('store')
@@ -30,9 +33,16 @@ class Index extends Component<IProps,IState> {
     }
     
     componentDidMount(){
+      Nprogress.start()
       this.props.store.setNavBar()
     }
+    componentWillUpdate() {
+      Nprogress.start()
+    }
 
+    componentDidUpdate(p) {
+      Nprogress.done()
+    }
     render(){
         return (
             <Layout style={{ height: '100vh' }}>
